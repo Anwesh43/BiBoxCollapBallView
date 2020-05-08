@@ -219,4 +219,13 @@ class BiBoxCollapView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+
+        fun create(activity : Activity) : BiBoxCollapView {
+            val view : BiBoxCollapView = BiBoxCollapView(activity)
+            activity.setContentView(view)
+            return view
+        }
+    }
 }
