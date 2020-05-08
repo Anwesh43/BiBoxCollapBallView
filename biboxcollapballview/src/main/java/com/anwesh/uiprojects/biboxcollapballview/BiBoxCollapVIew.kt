@@ -14,14 +14,13 @@ import android.graphics.Color
 import android.graphics.RectF
 
 val nodes : Int = 5
-val lines : Int = 2
-val scGap : Float = 0.02f
+val parts : Int = 3
+val scGap : Float = 0.02f / parts
 val strokeFactor : Int = 90
 val sizeFactor : Float = 2.9f
 val foreColor : Int = Color.parseColor("#4CAF50")
 val backColor : Int = Color.parseColor("#BDBDBD")
-val delay : Long = 20
-val parts : Int = 3
+val delay : Long = 5
 
 fun Int.inverse() : Float = 1f / this
 fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse())
@@ -31,8 +30,8 @@ fun Float.sinify() : Float = Math.sin(this * Math.PI).toFloat()
 fun Canvas.drawCollapBox(i : Int, sf : Float, size : Float, w : Float, paint : Paint) {
     val sfi : Float = sf.divideScale(i * 2, parts)
     save()
-    translate((w - size) * i, -size / 2)
-    drawRect(RectF(size * i * sfi, 0f, size * i + size * (1 - i) * (1 - sfi), size), paint)
+    translate((w - 2 * size) * i, -size)
+    drawRect(RectF(2 * size * i * sfi, 0f, 2 * size * i + 2 * size * (1 - i) * (sfi), 2 * size), paint)
     restore()
 }
 
@@ -40,7 +39,7 @@ fun Canvas.drawMovingCircle(sf : Float, w : Float, size : Float, paint : Paint) 
     val sf1 : Float = sf.divideScale(0, parts)
     val sf2 : Float = sf.divideScale(1, parts)
     val sf3 : Float = sf.divideScale(2, parts)
-    val x : Float = size + size * sf1 + (w - 2 * size) * sf2 + size * sf3
+    val x : Float = size + 2 * size * sf1 + (w - 6 * size) * sf2 + 2 * size * sf3
     drawCircle(x, 0f, size, paint)
 }
 
