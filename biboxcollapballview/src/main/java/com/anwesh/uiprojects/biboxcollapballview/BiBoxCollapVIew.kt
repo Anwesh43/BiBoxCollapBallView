@@ -194,4 +194,26 @@ class BiBoxCollapView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : BiBoxCollapView) {
+
+        private val bbc : BiBoxCollap = BiBoxCollap(0)
+        private val animator : Animator = Animator(view)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            bbc.draw(canvas, paint)
+            animator.animate {
+                bbc.update {
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            bbc.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
